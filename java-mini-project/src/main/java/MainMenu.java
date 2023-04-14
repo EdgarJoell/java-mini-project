@@ -3,6 +3,7 @@ import com.sun.tools.javac.Main;
 import java.util.Scanner;
 
 public class MainMenu {
+    // Fields
     protected Scanner scan1= new Scanner(System.in);
     protected Scanner scan2 = new Scanner(System.in);
     protected Scanner scan3 = new Scanner(System.in);
@@ -46,11 +47,21 @@ public class MainMenu {
     }
 // -----------------------------------------------------------------------------------------------------------------------------------------------
 // Check user input about whether they want to play against the computer or another human-----------------------------------------------------------------
+
+    /**
+     * takes in the users input of whether they wish to play against another player or against the computer and sends it to checkHumanOrComputer for validity.
+     * @return the value of the users input
+     */
     public String humanOrComputer() {
         String scanTwo = scan2.nextLine();
         return checkHumanOrComputer(scanTwo);
     }
 
+    /**
+     * Checks the validity of the value the user entered in humanOrComputer().
+     * @param input is the value that was entered in humanOrComputer().
+     * @return If the user chooses to play against another player, or the computer. But if the input is in the wrong format, this method will send the user back to humanOrComputer() to reenter their choice.
+     */
     public String checkHumanOrComputer(String input) {
         if(input.toLowerCase().equals("two")) {
             System.out.println("You chose to play 'player vs. player");
@@ -62,6 +73,10 @@ public class MainMenu {
         return input;
     }
     //---------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * This method creates two Human player objects and asks each player in the console if they wish to change their name settings.
+     */
     public void setupPlayerGame() {
         Human playerOne = new Human("Player One", 0, "");
         Human playerTwo = new Human("Player Two", 0, "");
@@ -83,6 +98,10 @@ public class MainMenu {
         }
     }
 
+    /**
+     * This method updates Player One's name.
+     * @param playerOne is the player object 'playerOne' passed down from the setupPlayerGame() method.
+     */
     public void updatePlayerOne(Human playerOne) {
         System.out.println("What would you like to change it to?");
         String scanThree = scan3.nextLine();
@@ -90,6 +109,10 @@ public class MainMenu {
         System.out.println("Player One's new name is " + playerOne.getName());
     }
 
+    /**
+     * This method updates Player One's name.
+     * @param playerTwo is the player object 'playerTwo' passed down from the setupPlayerGame() method.
+     */
     public void updatePlayerTwo(Human playerTwo) {
         System.out.println("What would you like to change it to?");
         String scanThree = scan3.nextLine();
@@ -97,13 +120,45 @@ public class MainMenu {
         System.out.println("Player One's new name is " + playerTwo.getName());
     }
 
+    /**
+     * Creates one Human object and one Computer object and asks the player if they wish to change playerOne's name or the Computer's name.
+     */
     public void setupComputerGame() {
-        Human player = new Human("Player", 0, "");
+        Human playerOne = new Human("Player One", 0, "");
         Computer computer = new Computer("Computer", 0, "");
 
+        System.out.println(playerOne.getName() + ", would you like to change your name? Please type either 'yes' or 'no'");
+        String scanThree = scan3.nextLine();
+        if(scanThree.toLowerCase().equals("yes")) {
+            updatePlayerOne(playerOne);
+        } else {
+            System.out.println("Player One's name is still Player Two");
+        }
 
+        System.out.println("Would you like to change the computers name?");
+        scanThree = scan3.nextLine();
+        if(scanThree.toLowerCase().equals("yes")) {
+            updateComputer(computer);
+        } else {
+            System.out.println("Computer's name is still Computer");
+        }
     }
 
+    /**
+     * Updates the computers name settings if the player wishes to change the computers name.
+     * @param computer is the Computer object passed in from the setupComputerGame() method.
+     */
+    public void updateComputer(Computer computer) {
+        System.out.println("What would you like to change it to?");
+        String scanThree = scan3.nextLine();
+        computer.setName(scanThree);
+        System.out.println("Player One's new name is " + computer.getName());
+    }
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void playGame(Object playerOne, Object playerTwo) {
+        
+    }
     public void viewHistory() {
 
     }
