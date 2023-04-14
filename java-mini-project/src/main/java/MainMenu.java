@@ -96,6 +96,9 @@ public class MainMenu {
         } else {
             System.out.println("Player Two's name is still Player Two");
         }
+        System.out.println("NEW GAME STARTING...\nARE YOU READY?...\nSHOOT\n" + playerOne.getName() + " it's your turn! Type either 'rock', 'paper', or 'scissors'");
+
+        playGameWithPlayer(playerOne, playerTwo);
     }
 
     /**
@@ -117,7 +120,7 @@ public class MainMenu {
         System.out.println("What would you like to change it to?");
         String scanThree = scan3.nextLine();
         playerTwo.setName(scanThree);
-        System.out.println("Player One's new name is " + playerTwo.getName());
+        System.out.println("Player Two's new name is " + playerTwo.getName());
     }
 
     /**
@@ -144,7 +147,6 @@ public class MainMenu {
         }
         System.out.println("NEW GAME STARTING...\nARE YOU READY?...\nSHOOT\n" + playerOne.getName() + " it's your turn! Type either 'rock', 'paper', or 'scissors'");
         playGameWithComputer(playerOne, computer);
-
     }
 
     /**
@@ -192,7 +194,18 @@ public class MainMenu {
     }
 
     public void playGameWithPlayer(Human playerOne, Human playerTwo) {
-
+        takePlayerInput(playerOne);
+        System.out.println(playerTwo.getName() + " it's your turn. Type either 'rock', 'paper', or 'scissors'");
+        takePlayerInput(playerTwo);
+        System.out.println(playerOne.getName() + " chose " + playerOne.getInput() +" AND " + playerTwo.getName() + " chose " + playerTwo.getInput());
+        if(playerOne.getInput() + playerTwo.getInput() == "rockscissors" || playerOne.getInput() + playerTwo.getInput() == "paperrock" || playerOne.getInput() + playerTwo.getInput() == "scissorspaper") {
+            playerOne.setScore();
+            System.out.println(playerOne.getName() + " won this round!\n" + "Their new score is " + playerOne.getScore());
+            history.add(playerOne.getName() + " was the winner");
+        } else {
+            playerTwo.setScore();
+            System.out.println(playerTwo.getName() + " won this round!\n" + "Their new score is " + playerTwo.getScore());
+        }
     }
 
     public void checkPlayerValidity(Human player) {
