@@ -26,8 +26,8 @@ public class Player {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setScore() {
+        this.score++;
     }
 
     public String getInput() {

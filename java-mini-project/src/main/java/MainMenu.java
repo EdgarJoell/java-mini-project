@@ -1,5 +1,4 @@
-import com.sun.tools.javac.Main;
-
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -12,6 +11,7 @@ public class MainMenu {
     protected Scanner scan5 = new Scanner(System.in);
 
     protected Scanner scan6 = new Scanner(System.in);
+    protected ArrayList<String> history = new ArrayList<>();
 
     public void play() {
         System.out.println("Main Menu: \n\nPlay Game \nView History \nQuit \nPlease type either 'play', 'history', or 'quit'\n");
@@ -86,7 +86,7 @@ public class MainMenu {
         if(scanThree.toLowerCase().equals("yes")) {
             updatePlayerOne(playerOne);
         } else {
-            System.out.println("Player One's name is still Player Two");
+            System.out.println("Player One's name is still Player One");
         }
 
         System.out.println(playerTwo.getName() + ", would you like to change your name?");
@@ -142,6 +142,9 @@ public class MainMenu {
         } else {
             System.out.println("Computer's name is still Computer");
         }
+        System.out.println("NEW GAME STARTING...\nARE YOU READY?...\nSHOOT\n" + playerOne.getName() + " it's your turn! Type either 'rock', 'paper', or 'scissors'");
+        playGameWithComputer(playerOne, computer);
+
     }
 
     /**
@@ -156,8 +159,49 @@ public class MainMenu {
     }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void playGame(Object playerOne, Object playerTwo) {
-        
+    public void takePlayerInput(Human player) {
+        String scanFour = scan4.nextLine();
+        player.setInput(scanFour);
+        checkPlayerValidity(player);
+    }
+
+    public void playGameWithComputer(Human playerOne, Computer computer) {
+        takePlayerInput(playerOne);
+        computerChooses(computer);
+        System.out.println(playerOne.getName() + " chose " + playerOne.getInput() +" AND " + computer.getName() + " chose " + computer.getInput());
+        if(playerOne.getInput() + computer.getInput() == "rockscissors" || playerOne.getInput() + computer.getInput() == "paperrock" || playerOne.getInput() + computer.getInput() == "scissorspaper") {
+            playerOne.setScore();
+            System.out.println(playerOne.getName() + " won this round!\n" + "Their new score is " + playerOne.getScore());
+            history.add(playerOne.getName() + " was the winner");
+        } else {
+            computer.setScore();
+            System.out.println(computer.getName() + " won this round!\n" + "Their new score is " + computer.getScore());
+        }
+    }
+
+    public String computerChooses(Computer computer) {
+        double random = Math.floor(Math.random() * 3);
+        String choice = "";
+        if(random == 1) choice = "rock";
+        else if(random == 2) choice = "paper";
+        else if(random == 3) choice = "scissors";
+        else System.out.println("doesn't work matey");
+        computer.setInput(choice);
+
+        return choice;
+    }
+
+    public void playGameWithPlayer(Human playerOne, Human playerTwo) {
+
+    }
+
+    public void checkPlayerValidity(Human player) {
+        if(player.getInput().toLowerCase().equals("rock") || player.getInput().toLowerCase().equals("paper") || player.getInput().toLowerCase().equals("scissors")) {
+            System.out.println(player.getName() + " chooses " + player.getInput());
+        } else {
+            System.out.println(player.getName() + " it appears you had a wrong input. Please try again");
+            takePlayerInput(player);
+        }
     }
     public void viewHistory() {
 
