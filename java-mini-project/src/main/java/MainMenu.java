@@ -135,7 +135,7 @@ public class MainMenu {
         if(scanThree.toLowerCase().equals("yes")) {
             updatePlayerOne(playerOne);
         } else {
-            System.out.println("Player One's name is still Player Two");
+            System.out.println("Player One's name is still Player One");
         }
 
         System.out.println("Would you like to change the computers name?");
@@ -161,17 +161,13 @@ public class MainMenu {
     }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void takePlayerInput(Human player) {
-        String scanFour = scan4.nextLine();
-        player.setInput(scanFour);
-        checkPlayerValidity(player);
-    }
-
     public void playGameWithComputer(Human playerOne, Computer computer) {
         takePlayerInput(playerOne);
         computerChooses(computer);
         System.out.println(playerOne.getName() + " chose " + playerOne.getInput() +" AND " + computer.getName() + " chose " + computer.getInput());
-        if(playerOne.getInput() + computer.getInput() == "rockscissors" || playerOne.getInput() + computer.getInput() == "paperrock" || playerOne.getInput() + computer.getInput() == "scissorspaper") {
+        if(playerOne.getInput().equals(computer.getInput())) {
+            System.out.println("It was a draw! Nobody wins.");
+        } else if((playerOne.getInput() + computer.getInput()).equals("rockscissors") || (playerOne.getInput() + computer.getInput()).equals("paperrock") || (playerOne.getInput() + computer.getInput()).equals("scissorspaper")) {
             playerOne.setScore();
             System.out.println(playerOne.getName() + " won this round!\n" + "Their new score is " + playerOne.getScore());
             history.add(playerOne.getName() + " was the winner");
@@ -179,14 +175,21 @@ public class MainMenu {
             computer.setScore();
             System.out.println(computer.getName() + " won this round!\n" + "Their new score is " + computer.getScore());
         }
+        
+    }
+
+    public void takePlayerInput(Human player) {
+        String scanFour = scan4.nextLine();
+        player.setInput(scanFour);
+        checkPlayerValidity(player);
     }
 
     public String computerChooses(Computer computer) {
         double random = Math.floor(Math.random() * 3);
         String choice = "";
-        if(random == 1) choice = "rock";
-        else if(random == 2) choice = "paper";
-        else if(random == 3) choice = "scissors";
+        if(random == 0) choice = "rock";
+        else if(random == 1) choice = "paper";
+        else if(random == 2) choice = "scissors";
         else System.out.println("doesn't work matey");
         computer.setInput(choice);
 
@@ -198,13 +201,17 @@ public class MainMenu {
         System.out.println(playerTwo.getName() + " it's your turn. Type either 'rock', 'paper', or 'scissors'");
         takePlayerInput(playerTwo);
         System.out.println(playerOne.getName() + " chose " + playerOne.getInput() +" AND " + playerTwo.getName() + " chose " + playerTwo.getInput());
-        if(playerOne.getInput() + playerTwo.getInput() == "rockscissors" || playerOne.getInput() + playerTwo.getInput() == "paperrock" || playerOne.getInput() + playerTwo.getInput() == "scissorspaper") {
+        if(playerOne.getInput().equals(playerTwo.getInput())) {
+            System.out.println("It was a draw! Nobody wins.");
+            history.add(playerOne.getName() + " vs. " + playerTwo.getName() + "results. It was a draw");
+        } else if((playerOne.getInput() + playerTwo.getInput()).equals("rockscissors") || (playerOne.getInput() + playerTwo.getInput()).equals("paperrock") || (playerOne.getInput() + playerTwo.getInput()).equals("scissorspaper")) {
             playerOne.setScore();
             System.out.println(playerOne.getName() + " won this round!\n" + "Their new score is " + playerOne.getScore());
-            history.add(playerOne.getName() + " was the winner");
+            history.add(playerOne.getName() + " vs. " + playerTwo.getName() + " results. " + playerOne.getName() + " was the winner");
         } else {
             playerTwo.setScore();
             System.out.println(playerTwo.getName() + " won this round!\n" + "Their new score is " + playerTwo.getScore());
+            history.add(playerOne.getName() + " vs. " + playerTwo.getName() + " results. " + playerTwo.getName() + " was the winner");
         }
     }
 
@@ -217,7 +224,9 @@ public class MainMenu {
         }
     }
     public void viewHistory() {
-
+        for (String s : history) {
+            System.out.println(s);
+        }
     }
 
     public void quitGame() {
